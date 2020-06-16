@@ -18,14 +18,14 @@ spec:
     spec:
       containers:
       - name: rollouts-demo
-        image: argoproj/rollouts-demo:green
+        image: argoproj/rollouts-demo:blue
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
   strategy:
     canary:
       steps:
-      - setWeight: 5
+      - setWeight: 20
       - pause:
           duration: 5m
       canaryService: canary-svc # required
@@ -55,7 +55,6 @@ spec:
         - destination:
             host: canary-svc
           weight: 0
----
 ---
 kind: Service
 apiVersion: v1
