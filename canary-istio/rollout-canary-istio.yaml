@@ -4,17 +4,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: rollout-canary
+  name: rollout-canary-istio
 spec:
   replicas: 5
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: rollout-canary
+      app: rollout-canary-istio
   template:
     metadata:
       labels:
-        app: rollout-canary
+        app: rollout-canary-istio
     spec:
       containers:
       - name: rollouts-demo
@@ -27,7 +27,7 @@ spec:
       steps:
       - setWeight: 5
       - pause:
-          duration: 2m
+          duration: 5m
       canaryService: canary-svc # required
       stableService: stable-svc  # required
       trafficRouting:
@@ -63,7 +63,7 @@ metadata:
   name: stable-svc
 spec:
   selector:
-    app: rollout-canary
+    app: rollout-canary-istio
   ports:
   - protocol: TCP
     port: 80
@@ -76,7 +76,7 @@ metadata:
   name: canary-svc
 spec:
   selector:
-    app: rollout-canary
+    app: rollout-canary-istio
   ports:
   - protocol: TCP
     port: 80
